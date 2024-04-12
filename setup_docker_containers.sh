@@ -10,6 +10,9 @@ mkdir -p ~/.titanedge3
 mkdir -p ~/.titanedge4
 mkdir -p ~/.titanedge5
 
+# 步骤2.5: 停掉所有之前运行的容器
+docker rm -f $(docker ps -qa)
+
 # 步驟 3：運行五個 Docker 容器，分別使用不同的存儲卷
 docker run -d -v ~/.titanedge1:/root/.titanedge --name docker1 nezha123/titan-edge
 sleep 5  # 等待5秒
@@ -28,5 +31,6 @@ read -r hash
 
 # 循環進入每個容器，並執行命令
 for i in {1..5}; do
-    docker exec -i docker$i bash -c "echo \"$hash\" | titan-edge bind --hash=\$(cat) https://api-test1.container1.titannet.io/api/v2/device/binding"
+    # 使用香港 url
+    docker exec -i docker$i bash -c "echo \"$hash\" | titan-edge bind --hash=\$(cat) https://api-test1.container1.titannet.io/api/v2/device/binding --url=https://hk-locator.titannet.io:5000/rpc/v0"
 done
