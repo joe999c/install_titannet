@@ -26,11 +26,11 @@ docker run -d -v ~/.titanedge5:/root/.titanedge --name docker5 nezha123/titan-ed
 sleep 5  # 等待5秒
 
 # 步驟 4：提示用户輸入 hash
-echo "請輸入你的 hash: "
-read -r hash
+# echo "請輸入你的 hash: "
+# read -r hash
 
 # 循環進入每個容器，並執行命令
 for i in {1..5}; do
     # 使用香港 url
-    docker exec -i docker$i bash -c "echo \"$hash\" | titan-edge bind --hash=\$(cat) https://api-test1.container1.titannet.io/api/v2/device/binding --url=https://hk-locator.titannet.io:5000/rpc/v0"
+    docker exec -i docker$i bash -c "titan-edge bind --hash=DEF159A7-1F26-4B90-9BD8-8AB37A261C1C https://api-test1.container1.titannet.io/api/v2/device/binding --url=https://hk-locator.titannet.io:5000/rpc/v0"
 done
